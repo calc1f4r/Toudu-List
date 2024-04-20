@@ -19,7 +19,7 @@ function App() {
   const [todoItem, setTodoItem] = useState<string>("");
 
   ////////// Defining all the functions //////////
-  // function to function to fetch all the todos
+  // function to function to fetch all the todos  
 
   let { data, error } = useReadContract({
     abi: CONTRACT_ABI,
