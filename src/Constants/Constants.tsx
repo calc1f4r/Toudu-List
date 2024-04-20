@@ -1,5 +1,44 @@
-export const CONTRACT_ADDRESS = "0x4d68171774dedcefcea24e0b4df961d4e369bfaf";
+export const CONTRACT_ADDRESS = "0x2e04dc50ebf55eba7b25f896b816d52607d823c3";
 export const CONTRACT_ABI = [
+  {
+    inputs: [
+      {
+        internalType: "string",
+        name: "_todoItem",
+        type: "string",
+      },
+    ],
+    name: "addTodo",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "_todoId",
+        type: "uint256",
+      },
+    ],
+    name: "completeTodo",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "_todoId",
+        type: "uint256",
+      },
+    ],
+    name: "deleteTodo",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
   {
     anonymous: false,
     inputs: [
@@ -85,45 +124,6 @@ export const CONTRACT_ABI = [
   {
     inputs: [
       {
-        internalType: "string",
-        name: "_todoItem",
-        type: "string",
-      },
-    ],
-    name: "addTodo",
-    outputs: [],
-    stateMutability: "nonpayable",
-    type: "function",
-  },
-  {
-    inputs: [
-      {
-        internalType: "uint256",
-        name: "_todoId",
-        type: "uint256",
-      },
-    ],
-    name: "completeTodo",
-    outputs: [],
-    stateMutability: "nonpayable",
-    type: "function",
-  },
-  {
-    inputs: [
-      {
-        internalType: "uint256",
-        name: "_todoId",
-        type: "uint256",
-      },
-    ],
-    name: "deleteTodo",
-    outputs: [],
-    stateMutability: "nonpayable",
-    type: "function",
-  },
-  {
-    inputs: [
-      {
         internalType: "uint256",
         name: "_todoId",
         type: "uint256",
@@ -161,7 +161,7 @@ export const CONTRACT_ABI = [
             type: "bool",
           },
         ],
-        internalType: "struct SimpleTodo.TODO[]",
+        internalType: "struct SimpleTodo.Todo[]",
         name: "",
         type: "tuple[]",
       },

@@ -1,15 +1,16 @@
-import { useState } from "react";
 import { useWriteContract } from "wagmi";
 import { CONTRACT_ADDRESS, CONTRACT_ABI } from "@/Constants/Constants";
 import { todoitem } from "@/Types/Types";
-
+import toast from "react-hot-toast";
+import { useEffect, useState } from "react";
+import { useWaitForTransactionReceipt } from "wagmi";
 export default function DisplayTodo({
   todoId,
   todoItem,
   isDeleted,
   isCompleted,
 }: todoitem) {
-  const { writeContract } = useWriteContract();
+  const { data: hash, error, isPending, writeContract } = useWriteContract();
 
   const [completeTodo, setCompleteTodo] = useState<boolean>(isCompleted);
   const [deleteTodo, setDeleteTodo] = useState<boolean>(isDeleted);
@@ -60,7 +61,19 @@ export default function DisplayTodo({
     }
     setIsLoading(false);
   };
-
+  const { isLoading: isConfirming, isSuccess: isConfirmed } =
+    useWaitForTransactionReceipt({
+      hash,
+    });
+  useEffect(() => {
+    if (isConfirming) {
+      toast("Confirming the transaction!!", {
+        icon: "🔃",
+      });
+    } else if (isConfirmed) {
+      toast.success("Transaction has been confirmed!");
+    }
+  }, [isConfirming, isConfirmed]);
   return (
     <div className="mt-5 flex-col gap-  ">
       <div className="flex items-center justify-center gap-3 border rounded-full p-3">

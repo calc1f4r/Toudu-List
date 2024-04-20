@@ -7,8 +7,9 @@ import { useWriteContract } from "wagmi";
 import DisplayTodo from "@/Components/DisplayTodo";
 import { todoitem } from "@/Types/Types";
 import AddTodo from "@/Components/AddTodo";
+import toast, { Toaster } from "react-hot-toast";
+
 import Navbar from "@/Components/Navbar";
-import { todo } from "node:test";
 function App() {
   const { writeContract } = useWriteContract();
 
@@ -24,6 +25,7 @@ function App() {
     abi: CONTRACT_ABI,
     address: CONTRACT_ADDRESS,
     functionName: "viewTodos",
+    account: address,
   });
 
   if (data == undefined) {
@@ -34,14 +36,16 @@ function App() {
     if (data) {
       setTodos(data);
     }
-    console.log(data);
-  }, [todos, data]);
+  }, [data]);
 
   function checkAllTodosAreDeleted(todos: todoitem[]): boolean {
     return todos.every((todo) => todo.isDeleted);
   }
   return (
     <>
+      <div>
+        <Toaster position="top-center" reverseOrder={true} />
+      </div>
       <div className="w-7/8 mx-auto">
         {/* Navbar */}
         <Navbar />

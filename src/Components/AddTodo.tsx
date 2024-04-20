@@ -1,11 +1,14 @@
 import { useWriteContract } from "wagmi";
+import toast from "react-hot-toast";
+import { useWaitForTransactionReceipt } from "wagmi";
+import { useEffect } from "react";
 import { CONTRACT_ADDRESS, CONTRACT_ABI } from "@/Constants/Constants";
 interface AddTodoProps {
   todoItem: string;
   setTodoItem: React.Dispatch<React.SetStateAction<string>>;
 }
 export default function AddTodo({ todoItem, setTodoItem }: AddTodoProps) {
-  const { writeContract } = useWriteContract();
+  const { data: hash, error, isPending, writeContract } = useWriteContract();
 
   const addTodo = () => {
     writeContract({
@@ -15,7 +18,19 @@ export default function AddTodo({ todoItem, setTodoItem }: AddTodoProps) {
       args: [todoItem],
     });
   };
-
+  const { isLoading: isConfirming, isSuccess: isConfirmed } =
+    useWaitForTransactionReceipt({
+      hash,
+    });
+  useEffect(() => {
+    if (isConfirming) {
+      toast("Confirming the transaction!!", {
+        icon: "🔃",
+      });
+    } else if (isConfirmed) {
+      toast.success("Transaction has been confirmed!");
+    }
+  }, [isConfirming, isConfirmed]);
   return (
     <div className=" sm:1/5 bg-base-100 shadow-md active:shadow-green-900/50  shadow-green-500/50 border mix-blend-normal	 rounded-3xl  p-10">
       <div className=" items-center text-center">
@@ -30,6 +45,7 @@ export default function AddTodo({ todoItem, setTodoItem }: AddTodoProps) {
 
         <div>
           <button
+            disabled={isPending}
             onClick={addTodo}
             className="btn mt-5 btn-outline btn-wide rounded-lg ">
             Add Todo

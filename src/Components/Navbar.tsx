@@ -1,8 +1,12 @@
+"use client";
 import { useState, useEffect } from "react";
 export default function Navbar() {
   const [theme, setTheme] = useState<string>(
-    localStorage.getItem("theme") || "black"
+    typeof window !== "undefined"
+      ? localStorage.getItem("theme") || "black"
+      : "black"
   );
+
   useEffect(() => {
     localStorage.setItem("theme", theme);
     let localtheme = localStorage.getItem("theme");

@@ -16,6 +16,7 @@
     "pino-pretty": "^11.0.0",
     "react": "^18",
     "react-dom": "^18",
+    "react-hot-toast": "^2.4.1",
     "viem": "^2.9.9",
     "wagmi": "^2.5.19"
   },
